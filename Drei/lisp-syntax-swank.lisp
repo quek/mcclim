@@ -64,7 +64,9 @@
          (swank::*buffer-package* package)
          (swank::*buffer-readtable* *readtable*))
     (let*  ((result (swank::compile-string-for-emacs
-                     string view-name (offset buffer-mark) (princ-to-string buffer-file-name)
+                     string view-name
+                     `((:position ,(offset buffer-mark) (:line (line-number buffer-mark))))
+                     (princ-to-string buffer-file-name)
                      nil))
             (notes (loop for note in (swank::compilation-result-notes result)
                          collect (make-compiler-note note))))
